@@ -1,0 +1,68 @@
+@import "./mixsin.scss";
+:root {
+  --color-primary: #EC4E02;
+  --color-text: #1B252B;
+  --color-black: #000;
+  --color-light: #F5F9FC;
+  --color-dimmest: #5C5F66;
+  
+  --main-font: 'ABC Diatype',sans-serif;
+  --med-font: 24px;
+  --small-font: 14px;
+  --smaller-font: 12.08px;
+  --smallest-font: 10.07px;
+}
+
+html, body{
+  height: 100%;
+  margin: 0;
+}
+
+.center-text{
+  text-align: center;
+}
+
+.flex-col{
+  display: flex;
+  flex-direction: column;
+}
+
+.gap-16{
+  gap: 16px;
+}
+
+.gap-24{
+  gap: 24px;
+}
+
+.main-link{
+  text-decoration: none;
+  color: color(primary);
+}
+
+.main-btn{
+  color: white;
+  background-color: color(primary);
+  align-self: stretch;
+  border: none;
+  border-radius: 12px;
+  border-color: color(primary);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.main-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  // width: 100%;
+  // height: 100%;
+  background-color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.main-btn:hover::before{
+  opacity: 0.2;
+}

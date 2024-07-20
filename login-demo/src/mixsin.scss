@@ -1,0 +1,8 @@
+@function color($color-name){
+  @return var(--color-#{$color-name});
+}
+
+@mixin flex-col{
+  display: flex;
+  flex-direction: column;
+}

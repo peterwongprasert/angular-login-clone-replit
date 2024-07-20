@@ -13,14 +13,12 @@ import { DOCUMENT } from '@angular/common';
 export class LoginComponent implements OnInit{
 
   link: string = "assets/images/facebook.png";
-  uzr: HTMLElement | null = null;
-  pw: HTMLElement | null = null;
+  loginBtn: HTMLElement | null = null;
+  isDisabled: boolean = true;
   oEye: HTMLElement | null = null;
   cEye: HTMLElement | null = null;
   eye: NodeListOf<HTMLInputElement> | null = null;
   up: NodeListOf<HTMLInputElement> | null = null;
-  loginBtn: HTMLElement | null = null;
-  isDisabled: boolean = true;
 
   constructor(private router: Router, @Inject(DOCUMENT) private document: Document) { }
 
@@ -56,16 +54,6 @@ export class LoginComponent implements OnInit{
 
   inputListener(): void{
     this.up = this.document.querySelectorAll('form input') as NodeListOf<HTMLInputElement>;
-    // this.loginBtn = this.document.querySelector('.main-btn');
-    
-    // this.up.forEach((element) => {
-    //   if(!element.value){
-    //     this.isDisabled = true;
-    //     return;
-    //   }
-    // })
-    // this.isDisabled = false;
-
     this.isDisabled = Array.from(this.up).some((element) => !element.value.trim())
   }
 }

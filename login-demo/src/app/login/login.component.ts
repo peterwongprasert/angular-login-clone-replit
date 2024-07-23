@@ -1,35 +1,45 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 
 export class LoginComponent implements OnInit{
-
-  link: string = "assets/images/facebook.png";
+  login: FormGroup;
   loginBtn: HTMLElement | null = null;
   isDisabled: boolean = true;
   oEye: HTMLElement | null = null;
   cEye: HTMLElement | null = null;
   eye: NodeListOf<HTMLInputElement> | null = null;
   up: NodeListOf<HTMLInputElement> | null = null;
+  link: string = "assets/images/facebook.png";
+  
 
-  constructor(private router: Router, @Inject(DOCUMENT) private document: Document) { }
+  constructor(
+    private router: Router, 
+    @Inject(DOCUMENT) private document: Document,
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) { 
+    this.login = this.fb.group({
+      uzr: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void{
     this.oEye = this.document.getElementById('o-eyeball');
     this.cEye = this.document.getElementById('c-eyeball');
     this.inputListener();
   }
-  // navigateToPath() {
-  //   this.router.navigate(['/path'])
-  // }
 
   toggleEyeballs(): void{
     if(this.cEye && this.oEye){
@@ -56,4 +66,22 @@ export class LoginComponent implements OnInit{
     this.up = this.document.querySelectorAll('form input') as NodeListOf<HTMLInputElement>;
     this.isDisabled = Array.from(this.up).some((element) => !element.value.trim())
   }
+
+  onSubmit(): void {
+    console.log('submit', this.login.value);
+    if (this.login.valid) {
+      this.authService.login(this.login.value).subscribe(
+        (response) => {
+          // Handle successful login
+          console.log('response ', response);
+          this.router.navigate(['/dashboard']);
+        },
+        (error) => {
+          // Handle login error
+          console.error('Login error', error);
+        }
+      );
+    }
+  }
+
 }
